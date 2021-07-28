@@ -11,20 +11,26 @@ public class Main {
         int zug = -1;
         String[] board = new String[9];
 
-        String spname;
+        String spname = null;
         String spsymb;
+        String CheckSymb = null;
+
+        int playercount = 0;
 
         System.out.println("Spieler 1:");
-        spname = playerNameEnter();
-        spsymb = playerSymbEnter();
+        spname = playerNameEnter(playercount, spname);
+        spsymb = playerSymbEnter(CheckSymb);
 
         Player eins = new Player(spname);
         eins.playerSymbol = spsymb;
 
+        CheckSymb = spsymb;
+
+        playercount++;
 
         System.out.println("Spieler 2:");
-        spname = playerNameEnter();
-        spsymb = playerSymbEnter();
+        spname = playerNameEnter(playercount, spname);
+        spsymb = playerSymbEnter(CheckSymb);
 
         Player zwei = new Player(spname);
         zwei.playerSymbol = spsymb;
@@ -57,20 +63,28 @@ public class Main {
 
     }
 
-    public static String playerNameEnter() {
+    public static String playerNameEnter(int playercount, String spname) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Bitte geben Sie ihren Namen ein:");
-
-        return scanner.nextLine();
+        if(playercount == 0) {
+            return scanner.nextLine();
+        }else{
+            String CheckName = scanner.nextLine();
+            while(CheckName.equals(spname)) {
+                System.out.println("Dieser Username ist bereits in verwändung, bitte wählen Sie einen anderen!");
+                CheckName = scanner.nextLine();
+            }
+            return CheckName;
+        }
     }
 
-    public static String playerSymbEnter() {
+    public static String playerSymbEnter(String CheckSymb) {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Bitte geben Sie ein, welches Symbol Sie verwenden wollen:");
         String spsymb = scanner.nextLine();
-        while (spsymb.equals("#")) {
-            System.out.println("Du kannst kein # verwenden!");
+        while (spsymb.equals("#") || spsymb.equals(CheckSymb)) {
+            System.out.println("Du kannst kein # oder bereits verwendetes Zeichen verwenden!");
             System.out.println("Neue Eingabe:");
             spsymb = scanner.nextLine();
         }

@@ -18,7 +18,7 @@ public class Player {
         input = input - 1;
         if(input < 9 && input >= 0){
             boolean pass = validTurn(board, input);
-            if(pass == true){
+            if(pass){
                 return input;
             }else{
                 System.out.println("Ungültiger Wert!");
